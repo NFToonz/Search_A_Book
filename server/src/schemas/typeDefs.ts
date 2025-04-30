@@ -24,7 +24,7 @@ type User {
         }
 
 type Query {
-    user(id: String, username: String) : User
+    me(id: String, username: String) : User
     }
 
     type Mutation {
