@@ -7,7 +7,7 @@ import routes from './routes/index.js';
 import { ApolloServer } from '@apollo/server'; // import ApolloServerExpress from '@apollo/server/express4';
 import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
-import { authenticateToken } from './utils/auth.js';
+import { authenticateToken } from './services/auth.js';
 
 const startApolloServer = async () => {
   const server = new ApolloServer({
@@ -33,12 +33,10 @@ const startApolloServer = async () => {
   // if we're in production, serve client/build as static assets
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/build')));
+    app.get('*', (_req, res) => {
+      res.sendFile(path.join(__dirname, '../client/build/index.html'));
+    });
   }
-
-// app.get('*', (_req: Request, res: Response) => {
-//   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-// });
-// }
 
   app.use(routes);
 
