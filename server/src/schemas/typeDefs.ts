@@ -1,12 +1,12 @@
-const typeDefs = `
 // This is the schema for the GraphQL API
+const typeDefs = `
 type User {
-    id: String
+    _id: String
     username: String
     email: String
     password: String
-    bookCount: number
-    savedBooks: [Book] // array of Book type
+    bookCount: Int
+    savedBooks: [Book] 
     }
 
     type Book {
@@ -17,20 +17,29 @@ type User {
         image: String
         link: String
     }
+        input BookInput {
+        bookId: String
+        authors: [String]
+        description: String
+        title: String
+        image: String
+        link: String
+    }
 
     type Auth {
         token : String
-        user : User // reference to User type
+        user : User 
         }
 
 type Query {
-    user(id: String, username: String) : User
+    me : User
     }
 
     type Mutation {
-        login( email : String!, password : String!) :n Auth
-        addUser(username: String!, email: String!, password: String!) : Auth'
-        saveBook(book: BookInput!) : User // Uses BookInput as input type
-        removerBook(bookId : String!) : User
+        login( email : String!, password : String!) : Auth
+        addUser(username: String!, email: String!, password: String!) : Auth
+        saveBook(book: BookInput!) : User 
+        removeBook(bookId : String!) : User
     }
-`
+`;
+export default typeDefs;
