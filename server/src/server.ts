@@ -8,7 +8,12 @@ import { ApolloServer } from '@apollo/server'; // import ApolloServerExpress fro
 import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
 import { authenticateToken } from './services/auth.js';
+//Study Group added code
+import {Request , Response} from 'express';
 
+const filePath = path.join(__dirname, 'public', 'index.html');
+console.log(filePath); // Logs the resolved file path
+//Study Group added code
 const startApolloServer = async () => {
   const server = new ApolloServer({
     typeDefs,
@@ -31,12 +36,20 @@ const startApolloServer = async () => {
   );
 
   // if we're in production, serve client/build as static assets
+
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/build')));
-    app.get('*', (_req, res) => {
-      res.sendFile(path.join(__dirname, '../client/build/index.html'));
+    app.use(express.static('../client/dist'));
+
+    app.get('*', (_req: Request, res: Response) => {
+      res.sendFile('../client/dist/index.html');
     });
   }
+  // if (process.env.NODE_ENV === 'production') {
+  //   app.use(express.static(path.join(__dirname, '../client/build')));
+  //   app.get('*', (_req, res) => {
+  //     res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  //   });
+  // }
 
   app.use(routes);
 
