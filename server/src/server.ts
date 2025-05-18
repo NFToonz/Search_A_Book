@@ -1,5 +1,5 @@
 import express from 'express';
-import path from 'node:path';
+// import path from 'node:path';
 import db from './config/connection.js';
 import routes from './routes/index.js';
 
@@ -9,9 +9,17 @@ import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
 import { authenticateToken } from './services/auth.js';
 //Study Group added code
-import {Request , Response} from 'express';
+import type {Request , Response} from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const filePath = path.join(__dirname, 'public', 'index.html');
+// const filePath = path.join(__dirname, 'public', 'index.html');
+// console.log(filePath); // Logs the resolved file path
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const filePath = path.join(__dirname, 'example.txt');
 console.log(filePath); // Logs the resolved file path
 //Study Group added code
 const startApolloServer = async () => {
